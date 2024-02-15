@@ -8,15 +8,15 @@ CODEOWNERS = ["@TheRealTom"]
 MULTI_CONF = True
 
 mr24d11c10_ns = cg.esphome_ns.namespace("mr24d11c10")
-MR24D11C10Component = mr24d11c10_ns.class_(
-    "MR24D11C10Component", cg.Component, uart.UARTDevice
+Mr24d11c10Component= mr24d11c10_ns.class_(
+    "Mr24d11c10Component", cg.Component, uart.UARTDevice
 )
 CONF_MR24D11C10_ID = "mr24d11c10_id"
 
 CONFIG_SCHEMA = cv.All(
     cv.Schema(
         {
-            cv.GenerateID(): cv.declare_id(MR24D11C10Component),
+            cv.GenerateID(): cv.declare_id(Mr24d11c10Component),
         }
     )
     .extend(uart.UART_DEVICE_SCHEMA)

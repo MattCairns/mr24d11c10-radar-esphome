@@ -1,13 +1,13 @@
 import esphome.codegen as cg
 from esphome.components import binary_sensor
 import esphome.config_validation as cv
-from . import CONF_MR24D11C10_ID, MR24D11C10Component
+from . import CONF_MR24D11C10_ID, Mr24d11c10Component
 
 DEPENDENCIES = ["mr24d11c10"]
 CONF_HUMAN_PRESENCE = "human_presence"
 
 CONFIG_SCHEMA = {
-    cv.GenerateID(CONF_MR24D11C10_ID): cv.use_id(MR24D11C10Component),
+    cv.GenerateID(CONF_MR24D11C10_ID): cv.use_id(Mr24d11c10Component),
     cv.Optional(CONF_HUMAN_PRESENCE): binary_sensor.binary_sensor_schema(),
 }
 

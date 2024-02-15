@@ -6,8 +6,6 @@
  * License: MIT
  */
 
-namespace esphome {
-namespace mr24d11c10 {
 
 #ifndef _RADAR_H__
 #define _RADAR_H__
@@ -23,6 +21,4 @@ class radar {
 };
 #endif
 
-}  // namespace mr24d11c10
-}  // namespace esphome
 /** END of copied and changed content */

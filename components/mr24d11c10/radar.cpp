@@ -7,9 +7,6 @@
 #include "radar.h"
 #include <stdint.h>
 
-namespace esphome {
-namespace mr24d11c10 {
-
 const uint8_t MESSAGE_HEAD = 0x55;
 const uint8_t ACTIVE_REPORT = 0x04;
 const uint8_t FALL_REPORT = 0x06;
@@ -154,6 +151,4 @@ int radar::Fall_judgment(int ad1, int ad2, int ad3, int ad4) {
   return result;
 }
 
-}  // namespace mr24d11c10
-}  // namespace esphome
 /** END of copied and changed content */

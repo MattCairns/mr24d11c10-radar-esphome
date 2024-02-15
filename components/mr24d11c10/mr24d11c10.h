@@ -1,4 +1,5 @@
 #pragma once
+#include "esphome.h"
 #include "esphome/core/defines.h"
 #include "esphome/core/component.h"
 #include "esphome/components/uart/uart.h"
@@ -51,7 +52,10 @@ static const uint8_t PROTOCOL_VERSION = 0x04;
 static const uint8_t SCENE = 0x10;
 static const uint8_t DATA_OFFSET = 4;
 
-class MR24D11C10Component : public Component, public uart::UARTDevice {
+namespace esphome {
+namespace mr24d11c10 {
+
+class Mr24d11c10Component: public Component, public uart::UARTDevice {
  public:
   float get_setup_priority() const override { return setup_priority::AFTER_WIFI; }
   void setup() override;
@@ -76,4 +80,5 @@ class MR24D11C10Component : public Component, public uart::UARTDevice {
   binary_sensor::BinarySensor *target_present_{nullptr};
   sensor::Sensor *body_movement_{nullptr};
 };
-
+} // namespace mr24d11c10 
+} // namespace esphome 

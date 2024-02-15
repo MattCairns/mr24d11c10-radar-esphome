@@ -5,13 +5,13 @@ from esphome.const import (
     DEVICE_CLASS_EMPTY,
     UNIT_PERCENT,
 )
-from . import CONF_MR24D11C10_ID, MR24D11C10Component
+from . import CONF_MR24D11C10_ID, Mr24d11c10Component
 
 DEPENDENCIES = ["mr24d11c10"]
 CONF_BODY_MOVEMENT = "body_movement"
 
 CONFIG_SCHEMA = {
-    cv.GenerateID(CONF_MR24D11C10_ID): cv.use_id(MR24D11C10Component),
+    cv.GenerateID(CONF_MR24D11C10_ID): cv.use_id(Mr24d11c10Component),
     cv.Optional(CONF_BODY_MOVEMENT): sensor.sensor_schema(
         device_class=DEVICE_CLASS_EMPTY, unit_of_measurement=UNIT_PERCENT
     ),

@@ -1,8 +1,10 @@
 #include "mr24d11c10.h"
 #include <string>
 
+namespace esphome {
+namespace mr24d11c10 {
 
-void MR24D11C10Component::setup() {
+void Mr24d11c10Component::setup() {
   // This will be called by App.setup()
 }
 
@@ -11,7 +13,7 @@ void MR24D11C10Component::setup() {
  * Link: https://github.com/x00Pavel/mmWave-HomeAssistant
  * Accessed: 5/7/2023
  */
-void MR24D11C10Component::send_command(uint8_t *buff, uint8_t data_length) {
+void Mr24d11c10Component::send_command(uint8_t *buff, uint8_t data_length) {
   size_t total_size = 5 + data_length;
   unsigned char cmd_buff[total_size];
 
@@ -51,22 +53,22 @@ void MR24D11C10Component::send_command(uint8_t *buff, uint8_t data_length) {
 }
 /** END of citation and updates of it */
 
-void MR24D11C10Component::send_new_scene_settings(uint8_t id) {
+void Mr24d11c10Component::send_new_scene_settings(uint8_t id) {
   uint8_t cmd_list[4] = {0x02, 0x04, 0x10, id};
   send_command(cmd_list, 4);
 }
 
-void MR24D11C10Component::send_new_threshold(uint8_t id) {
+void Mr24d11c10Component::send_new_threshold(uint8_t id) {
   uint8_t cmd_list[4] = {0x02, 0x04, 0x0C, id};
   send_command(cmd_list, 4);
 }
 
-void MR24D11C10Component::get_radar_device_id() {
+void Mr24d11c10Component::get_radar_device_id() {
   uint8_t cmd_list[3] = {0x01, 0x01, 0x01};
   send_command(cmd_list, 3);
 }
 
-void MR24D11C10Component::printBufferOnLine() {
+void Mr24d11c10Component::printBufferOnLine() {
   switch (msg_len) {
     case 4:
       ESP_LOGD("debbug buffer", "0x%02x 0x%02x 0x%02x 0x%02x", buffer[0], buffer[1], buffer[2], buffer[3]);
@@ -94,7 +96,7 @@ void MR24D11C10Component::printBufferOnLine() {
   }
 }
 
-void MR24D11C10Component::active_result() {
+void Mr24d11c10Component::active_result() {
   // printBuffer();
   switch (buffer[5]) {
     case ENVIRONMENT:
@@ -124,9 +126,9 @@ void MR24D11C10Component::active_result() {
 }
 
 // TODO: Implement read_configs
-void MR24D11C10Component::read_configs() { ESP_LOGD("reading config", "\n"); }
+void Mr24d11c10Component::read_configs() { ESP_LOGD("reading config", "\n"); }
 
-void MR24D11C10Component::process_message() {
+void Mr24d11c10Component::process_message() {
   switch (buffer[3]) {
     case READ_CONFIG:
       read_configs();
@@ -146,7 +148,7 @@ void MR24D11C10Component::process_message() {
   }
 }
 
-void MR24D11C10Component::loop() {
+void Mr24d11c10Component::loop() {
   if (available()) {
     msg_len = 0;
     if (read() == MESSAGE_HEAD) {
@@ -162,3 +164,5 @@ void MR24D11C10Component::loop() {
   }
 }
 
+}
+}
