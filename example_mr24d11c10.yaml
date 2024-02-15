@@ -40,7 +40,9 @@ uart:
 
 custom_component:
   - lambda: |-
-      return {new MR24D11C10Component(id(uartone))};
+      auto my_custom_sensor = new MR24D11C10Component(id(uartone));
+      App.register_component(my_custom_sensor);
+      return {my_custom_sensor};
     components:
       - id: seeedStudioRadar
 
