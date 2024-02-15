@@ -60,7 +60,7 @@ binary_sensor:
   
   - platform: custom
     lambda: |-
-      auto uart_component = static_cast<MR24D11C10Component*>(seeedStudioRadar);
+      auto uart_component = static_cast<MR24D11C10Component*>(id(seeedStudioRadar));
       return uart_component->target_present;
     binary_sensors:
       name: "Human presence"
@@ -68,7 +68,7 @@ binary_sensor:
 sensor:
 - platform: custom
   lambda: |-
-    auto uart_component = static_cast<MR24D11C10Component*>(seeedStudioRadar);
+    auto uart_component = static_cast<MR24D11C10Component*>(id(seeedStudioRadar));
     return uart_component->body_movement;
 
   sensors:
@@ -92,7 +92,7 @@ select:
     on_value:
       then:
       - lambda: |-
-          auto uart_component = static_cast<MR24D11C10Component*>(seeedStudioRadar);
+          auto uart_component = static_cast<MR24D11C10Component*>(id(seeedStudioRadar));
           uint8_t index = 0;
           if (x == "Area detection") {
             index = 1;
@@ -129,7 +129,7 @@ select:
     on_value:
       then:
       - lambda: |-
-          auto uart_component = static_cast<MR24D11C10Component*>(seeedStudioRadar);
+          auto uart_component = static_cast<MR24D11C10Component*>(id(seeedStudioRadar));
           uint8_t index = 0;
           if (x == "1") {
             index = 1;
