@@ -13,8 +13,6 @@
 
 #include "radar.h"
 
-namespace esphome {
-namespace mr24d11c10 {
 
 // Header
 static const uint8_t MESSAGE_HEAD = 0x55;
@@ -79,5 +77,3 @@ class MR24D11C10Component : public Component, public uart::UARTDevice {
   sensor::Sensor *body_movement_{nullptr};
 };
 
-}  // namespace mr24d11c10
-}  // namespace esphome

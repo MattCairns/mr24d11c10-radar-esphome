@@ -1,8 +1,6 @@
 #include "mr24d11c10.h"
 #include <string>
 
-namespace esphome {
-namespace mr24d11c10 {
 
 void MR24D11C10Component::setup() {
   // This will be called by App.setup()
@@ -164,5 +162,3 @@ void MR24D11C10Component::loop() {
   }
 }
 
-}  // namespace mr24d11c10
-}  // namespace esphome
