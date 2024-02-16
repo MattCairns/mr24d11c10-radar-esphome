@@ -37,14 +37,8 @@ uart:
   rx_pin: D4
   baud_rate: 9600
 
-
-custom_component:
-  - lambda: |-
-      auto radar = new Mr24d11c10Component(id(uartone));
-      App.register_component(radar);
-      return {radar};
-    components:
-      - id: seeedStudioRadar
+mr24d11c10:
+  id: seeedStudioRadar
 
 captive_portal:
 

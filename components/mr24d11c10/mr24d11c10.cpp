@@ -4,6 +4,8 @@
 namespace esphome {
 namespace mr24d11c10 {
 
+static const char *TAG = "mr24d11c10";
+
 void Mr24d11c10Component::setup() {
   // This will be called by App.setup()
 }

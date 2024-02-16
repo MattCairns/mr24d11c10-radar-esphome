@@ -14,6 +14,8 @@
 
 #include "radar.h"
 
+namespace esphome {
+namespace mr24d11c10 {
 
 // Header
 static const uint8_t MESSAGE_HEAD = 0x55;
@@ -51,9 +53,6 @@ static const uint8_t HW_VERSION = 0x03;
 static const uint8_t PROTOCOL_VERSION = 0x04;
 static const uint8_t SCENE = 0x10;
 static const uint8_t DATA_OFFSET = 4;
-
-namespace esphome {
-namespace mr24d11c10 {
 
 class Mr24d11c10Component: public Component, public uart::UARTDevice {
  public:
