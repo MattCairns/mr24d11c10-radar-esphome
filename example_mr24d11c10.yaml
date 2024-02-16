@@ -31,16 +31,17 @@ wifi:
     ssid: "Mmwave-Presence Fallback Hotspot"
     password: "D2J8V6Q6E7fp"
 
+captive_portal:
+
 uart:
   id: uartone
   tx_pin: D3
   rx_pin: D4
   baud_rate: 9600
 
+
 mr24d11c10:
   id: seeedStudioRadar
-
-captive_portal:
 
 binary_sensor:
   - platform: gpio
@@ -54,16 +55,16 @@ binary_sensor:
   
   - platform: custom
     lambda: |-
-      auto uart_component = static_cast<Mr24d11c10Component*>(id(seeedStudioRadar));
-      return uart_component->target_present;
+      auto uart_component = static_cast<mr24d11c10::Mr24d11c10Component*>(id(seeedStudioRadar));
+      return {uart_component->target_present_};
     binary_sensors:
       name: "Human presence"
 
 sensor:
 - platform: custom
   lambda: |-
-    auto uart_component = static_cast<Mr24d11c10Component*>(id(seeedStudioRadar));
-    return uart_component->body_movement;
+    auto uart_component = static_cast<mr24d11c10::Mr24d11c10Component*>(id(seeedStudioRadar));
+    return {uart_component->body_movement_};
 
   sensors:
     name: "My Radar Sensor"
@@ -86,7 +87,7 @@ select:
     on_value:
       then:
       - lambda: |-
-          auto uart_component = static_cast<Mr24d11c10Component*>(id(seeedStudioRadar));
+          auto uart_component = static_cast<mr24d11c10::Mr24d11c10Component*>(id(seeedStudioRadar));
           uint8_t index = 0;
           if (x == "Area detection") {
             index = 1;
@@ -123,7 +124,7 @@ select:
     on_value:
       then:
       - lambda: |-
-          auto uart_component = static_cast<Mr24d11c10Component*>(id(seeedStudioRadar));
+          auto uart_component = static_cast<mr24d11c10::Mr24d11c10Component*>(id(seeedStudioRadar));
           uint8_t index = 0;
           if (x == "1") {
             index = 1;
