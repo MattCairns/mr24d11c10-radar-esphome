@@ -1,4 +1,5 @@
 #include "mr24d11c10.h"
+#include "radar.h"
 #include <string>
 
 namespace esphome {
@@ -71,35 +72,14 @@ void Mr24d11c10Component::get_radar_device_id() {
 }
 
 void Mr24d11c10Component::printBufferOnLine() {
-  switch (msg_len) {
-    case 4:
-      ESP_LOGD("debbug buffer", "0x%02x 0x%02x 0x%02x 0x%02x", buffer[0], buffer[1], buffer[2], buffer[3]);
-      break;
-    case 8:
-      ESP_LOGD("debbug buffer", "0x%02x 0x%02x 0x%02x 0x%02x 0x%02x 0x%02x 0x%02x 0x%02x", buffer[0], buffer[1],
-               buffer[2], buffer[3], buffer[4], buffer[5], buffer[6], buffer[7]);
-      break;
-    case 9:
-      ESP_LOGD("debbug buffer", "0x%02x 0x%02x 0x%02x 0x%02x 0x%02x 0x%02x 0x%02x 0x%02x 0x%02x", buffer[0], buffer[1],
-               buffer[2], buffer[3], buffer[4], buffer[5], buffer[6], buffer[7], buffer[8]);
-      break;
-    case 10:
-      ESP_LOGD("debbug buffer", "0x%02x 0x%02x 0x%02x 0x%02x 0x%02x 0x%02x 0x%02x 0x%02x 0x%02x 0x%02x", buffer[0],
-               buffer[1], buffer[2], buffer[3], buffer[4], buffer[5], buffer[6], buffer[7], buffer[8], buffer[9]);
-      break;
-    case 11:
-      ESP_LOGD("debbug buffer", "0x%02x 0x%02x 0x%02x 0x%02x 0x%02x 0x%02x 0x%02x 0x%02x 0x%02x 0x%02x 0x%02x",
-               buffer[0], buffer[1], buffer[2], buffer[3], buffer[4], buffer[5], buffer[6], buffer[7], buffer[8],
-               buffer[9], buffer[10]);
-      break;
-    default:
-      ESP_LOGD("debbug buffer", "UNEXPECTED LENGTH: %d B", msg_len);
-      break;
+  ESP_LOGD("debug buffer", "0x");
+  for (int i = 0; i < msg_len; ++i) {
+    ESP_LOGD("debug buffer", " %02x", buffer[i]);
   }
+  ESP_LOGD("debug buffer", "");
 }
 
 void Mr24d11c10Component::active_result() {
-  // printBuffer();
   switch (buffer[5]) {
     case ENVIRONMENT:
     case HEARTBEAT:
@@ -111,7 +91,6 @@ void Mr24d11c10Component::active_result() {
     }
     case BODYSIGN: {
       float x = seeedRadar->Bodysign_val(buffer[5], buffer[6], buffer[7], buffer[8], buffer[9]);
-      // Correction to percents
       if (x > 100.0f) {
         x = 100.0f;
       }

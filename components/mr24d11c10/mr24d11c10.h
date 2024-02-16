@@ -75,7 +75,7 @@ class Mr24d11c10Component: public Component, public uart::UARTDevice {
   void process_message();
   void send_command(uint8_t *buff, uint8_t data_length);
 
- protected:
+ // protected:
   binary_sensor::BinarySensor *target_present_{nullptr};
   sensor::Sensor *body_movement_{nullptr};
 };
