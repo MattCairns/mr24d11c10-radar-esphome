@@ -25,6 +25,7 @@ static const uint8_t READ_CONFIG = 0x01;
 static const uint8_t WRITE_CONFIG = 0x02;
 static const uint8_t PASSIVE_REPORT = 0x03;
 static const uint8_t ACTIVE_REPORT = 0x04;
+static const uint8_t FALL_REPORT = 0x06;
 
 // Address functions 1
 static const uint8_t REPORT_RADAR = 0x03;
@@ -75,9 +76,9 @@ class Mr24d11c10Component: public Component, public uart::UARTDevice {
   void process_message();
   void send_command(uint8_t *buff, uint8_t data_length);
 
- // protected:
   binary_sensor::BinarySensor *target_present_{nullptr};
   sensor::Sensor *body_movement_{nullptr};
 };
+
 } // namespace mr24d11c10 
 } // namespace esphome 

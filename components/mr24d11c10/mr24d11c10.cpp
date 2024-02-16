@@ -1,6 +1,6 @@
 #include "mr24d11c10.h"
-#include "radar.h"
 #include <string>
+#include <stdint.h>
 
 namespace esphome {
 namespace mr24d11c10 {
@@ -144,6 +144,9 @@ void Mr24d11c10Component::loop() {
     }
   }
 }
+
+
+
 
 }
 }
