@@ -61,23 +61,17 @@ class Mr24d11c10Component: public Component, public uart::UARTDevice {
   void setup() override;
   void loop() override;
 
-  radar *seeedRadar;
+  void send_command(uint8_t *buff, uint8_t data_length);
+  void get_radar_device_id();
+  void print_buffer_one_line();
+  void active_result();
+  void process_message();
+
+  std::unique_ptr<radar> seeedRadar; 
+  binary_sensor::BinarySensor *target_present = new binary_sensor::BinarySensor();
+  sensor::Sensor *body_movement = new sensor::Sensor();
   uint8_t buffer[64];
   size_t msg_len;
-
-  void set_human_presence_binary_sensor(binary_sensor::BinarySensor *sens) { this->target_present_ = sens; };
-  void set_body_movement_sensor(sensor::Sensor *sens) { this->body_movement_ = sens; };
-  void send_new_scene_settings(uint8_t id);
-  void send_new_threshold(uint8_t id);
-  void get_radar_device_id();
-  void printBufferOnLine();
-  void active_result();
-  void read_configs();
-  void process_message();
-  void send_command(uint8_t *buff, uint8_t data_length);
-
-  binary_sensor::BinarySensor *target_present_{nullptr};
-  sensor::Sensor *body_movement_{nullptr};
 };
 
 } // namespace mr24d11c10 

@@ -2,10 +2,16 @@ esphome:
   name: mmwave-presence
   friendly_name: mmwave-presence
 
+# external_components:
+#   - source:  github://MattCairns/mr24d11c10-radar-esphome
+#     components: [ mr24d11c10 ]
+#     refresh: 0s
+
 external_components:
-  - source:  github://MattCairns/mr24d11c10-radar-esphome
+  - source:
+      type: local 
+      path: components
     components: [ mr24d11c10 ]
-    refresh: 0s
 
 esp8266:
   board: d1_mini
@@ -70,81 +76,3 @@ sensor:
     name: "My Radar Sensor"
     unit_of_measurement: "%"
     accuracy_decimals: 0
-
-select:
-  - platform: template
-    name: "Scene Settings"
-    id: scene_settings
-    options:
-    - "Default"
-    - "Area detection"
-    - "Bathroom"
-    - "Living Room"
-    - "Office"
-    - "Hotel"
-    initial_option: "Default"
-    optimistic: true
-    on_value:
-      then:
-      - lambda: |-
-          auto uart_component = static_cast<mr24d11c10::Mr24d11c10Component*>(id(seeedStudioRadar));
-          uint8_t index = 0;
-          if (x == "Area detection") {
-            index = 1;
-          } else if (x == "Bathroom") {
-            index = 2;
-          } else if (x == "Living Room") {
-            index = 3;
-          } else if (x == "Office") {
-            index = 4;
-          } else if (x == "Hotel") {
-            index = 5;
-          } else {
-            index = 0;
-          }
-          uart_component->send_new_scene_settings(index);
-
-    
-  - platform: template
-    name: "Threshold"
-    id: mode
-    options:
-    - "1"
-    - "2"
-    - "3"
-    - "4"
-    - "5"
-    - "6"
-    - "7"
-    - "8"
-    - "9"
-    - "10"
-    initial_option: "7"
-    optimistic: true
-    on_value:
-      then:
-      - lambda: |-
-          auto uart_component = static_cast<mr24d11c10::Mr24d11c10Component*>(id(seeedStudioRadar));
-          uint8_t index = 0;
-          if (x == "1") {
-            index = 1;
-          } else if (x == "2") {
-            index = 2;
-          } else if (x == "3") {
-            index = 3;
-          } else if (x == "4") {
-            index = 4;
-          } else if (x == "5") {
-            index = 5;
-          } else if (x == "6") {
-            index = 6;
-          } else if (x == "7") {
-            index = 7;
-          } else if (x == "8") {
-            index = 8;
-          } else if (x == "9") {
-            index = 9;
-          } else {
-            index = 10;
-          }
-          uart_component->send_new_threshold(i);

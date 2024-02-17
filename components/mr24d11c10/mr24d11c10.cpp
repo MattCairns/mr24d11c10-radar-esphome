@@ -8,7 +8,23 @@ namespace mr24d11c10 {
 static const char *TAG = "mr24d11c10";
 
 void Mr24d11c10Component::setup() {
-  // This will be called by App.setup()
+  seeedRadar = std::make_unique<radar>();
+}
+
+void Mr24d11c10Component::loop() {
+  if (available()) {
+    msg_len = 0;
+    if (read() == MESSAGE_HEAD) {
+      buffer[msg_len] = MESSAGE_HEAD;
+      msg_len++;
+      while (available()) {
+        uint8_t incomingValues = read();
+        buffer[msg_len] = incomingValues;
+        msg_len++;
+      }
+      process_message();
+    }
+  }
 }
 
 /** Reused function from github to send data
@@ -56,22 +72,12 @@ void Mr24d11c10Component::send_command(uint8_t *buff, uint8_t data_length) {
 }
 /** END of citation and updates of it */
 
-void Mr24d11c10Component::send_new_scene_settings(uint8_t id) {
-  uint8_t cmd_list[4] = {0x02, 0x04, 0x10, id};
-  send_command(cmd_list, 4);
-}
-
-void Mr24d11c10Component::send_new_threshold(uint8_t id) {
-  uint8_t cmd_list[4] = {0x02, 0x04, 0x0C, id};
-  send_command(cmd_list, 4);
-}
-
 void Mr24d11c10Component::get_radar_device_id() {
   uint8_t cmd_list[3] = {0x01, 0x01, 0x01};
   send_command(cmd_list, 3);
 }
 
-void Mr24d11c10Component::printBufferOnLine() {
+void Mr24d11c10Component::print_buffer_one_line() {
   ESP_LOGD("debug buffer", "0x");
   for (int i = 0; i < msg_len; ++i) {
     ESP_LOGD("debug buffer", " %02x", buffer[i]);
@@ -86,7 +92,7 @@ void Mr24d11c10Component::active_result() {
     case CLOSE_AWAY: {
       int result = seeedRadar->Situation_judgment(buffer[4], buffer[5], buffer[6], buffer[7], buffer[8]);
       ESP_LOGD("debbug target_present_", "%d \n", result != 1);
-      target_present_->publish_state(result != 1);
+      target_present->publish_state(result != 1);
       break;
     }
     case BODYSIGN: {
@@ -97,7 +103,8 @@ void Mr24d11c10Component::active_result() {
       if (x < 0.0f) {
         x = 0.0f;
       }
-      body_movement_->publish_state(x);
+      ESP_LOGD("body movement", "%f \n", x);
+      body_movement->publish_state(x);
       break;
     }
     default:
@@ -106,47 +113,22 @@ void Mr24d11c10Component::active_result() {
   }
 }
 
-// TODO: Implement read_configs
-void Mr24d11c10Component::read_configs() { ESP_LOGD("reading config", "\n"); }
-
 void Mr24d11c10Component::process_message() {
   switch (buffer[3]) {
     case READ_CONFIG:
-      read_configs();
       break;
     case WRITE_CONFIG:
-      // TODO: write_config();
       break;
     case ACTIVE_REPORT:
       active_result();
       break;
     case PASSIVE_REPORT:
-      // TODO: get_radar_information();
       break;
     default:
       ESP_LOGE("UNKNOWN FUNCTION", "UNEXPECTED VALUE: 0x%02x", buffer[3]);
       break;
   }
 }
-
-void Mr24d11c10Component::loop() {
-  if (available()) {
-    msg_len = 0;
-    if (read() == MESSAGE_HEAD) {
-      buffer[msg_len] = MESSAGE_HEAD;
-      msg_len++;
-      while (available()) {
-        uint8_t incomingValues = read();
-        buffer[msg_len] = incomingValues;
-        msg_len++;
-      }
-      process_message();
-    }
-  }
-}
-
-
-
 
 }
 }
