@@ -45,34 +45,25 @@ uart:
   rx_pin: D4
   baud_rate: 9600
 
-
 mr24d11c10:
   id: seeedStudioRadar
 
-binary_sensor:
-  - platform: gpio
-    pin: GPIO14
-    name: "Human presense PIN"
-    device_class: PRESENCE
-
-  - platform: gpio
-    pin: GPIO12
-    name: "Human activity PIN"
-  
+binary_sensor:  
   - platform: custom
     lambda: |-
       auto uart_component = static_cast<mr24d11c10::Mr24d11c10Component*>(id(seeedStudioRadar));
-      return {uart_component->target_present_};
+      return {uart_component->target_present};
     binary_sensors:
-      name: "Human presence"
+      name: "Human Present"
 
 sensor:
 - platform: custom
   lambda: |-
     auto uart_component = static_cast<mr24d11c10::Mr24d11c10Component*>(id(seeedStudioRadar));
-    return {uart_component->body_movement_};
+    return {uart_component->body_movement};
 
   sensors:
-    name: "My Radar Sensor"
+    name: "Radar Activity"
     unit_of_measurement: "%"
     accuracy_decimals: 0
+
